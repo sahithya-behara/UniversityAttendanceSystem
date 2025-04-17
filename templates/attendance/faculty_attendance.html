@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Faculty Attendance</title>
+    <style>
+        body {
+            background-color: #AF3838;
+            font-family: Arial, sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+        }
+        form {
+            width: 80%;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        th, td {
+            border: 1px solid white;
+            padding: 12px;
+            text-align: center;
+        }
+        select {
+            padding: 6px;
+            font-size: 16px;
+        }
+        .submit-btn {
+            background-color: #2E0B40;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .submit-btn:hover {
+            background-color: #441a63;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Faculty Attendance - {{ today }}</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Faculty Name</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for faculty in faculty_members %}
+                <tr>
+                    <td>{{ faculty.name }}</td>
+                    <td>
+                        <select name="attendance_{{ faculty.id }}">
+                            <option value="Present" {% if faculty.status == "Present" %}selected{% endif %}>Present</option>
+                            <option value="Absent" {% if faculty.status == "Absent" %}selected{% endif %}>Absent</option>
+                        </select>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="submit-btn">Save Attendance</button>
+    </form>
+
+</body>
+</html>

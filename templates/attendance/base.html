@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}University Attendance System{% endblock %}</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Arial", sans-serif;
+        }
+        
+        body {
+            background-color: #AF3838; /* Dark Red */
+            color: white;
+            text-align: center;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: #2E0B40; /* Dark Purple */
+            padding: 20px;
+            font-size: 18px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Menu Button (Top Left) */
+        .menu {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .menu-icon {
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding-top: 60px;
+            transition: 0.3s ease-in-out;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background: #5A1E6B;
+        }
+
+        /* Notification Icon (Top Right) */
+        .notification {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .notification img {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            position: absolute;
+            top: 20px;
+            right: 60px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>UNIVERSITY ATTENDANCE MANAGEMENT SYSTEM</h1>
+        
+        <!-- Menu Button (Left Corner) -->
+        <nav class="menu">
+            <div class="menu-icon" id="menu-icon">&#9776;</div>
+        </nav>
+        
+        <!-- Notification Icon (Top Right) -->
+        <div class="notification">
+            <a href="#">
+                <img src="https://cdn-icons-png.flaticon.com/64/2499/2499376.png" alt="Notifications">
+            </a>
+        </div>
+
+        <!-- Logout Button -->
+        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+    </header>
+
+    <!-- Sidebar Menu -->
+    <div id="sidebar" class="sidebar">
+        <a href="{% url 'home' %}">Dashboard</a>
+        <a href="{% url 'profile' %}">Profile</a>
+        <a href="{% url 'settings' %}">Settings</a>
+        <a href="{% url 'feedback' %}">Feedback</a>
+        <a href="{% url 'about' %}">About App</a>
+    </div>
+
+    <!-- Main Content Block -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- JavaScript for Sidebar Toggle -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let menuIcon = document.getElementById("menu-icon");
+            let sidebar = document.getElementById("sidebar");
+
+            menuIcon.addEventListener("click", function () {
+                sidebar.classList.toggle("open");
+            });
+
+            // Close sidebar when clicking outside
+            document.addEventListener("click", function (event) {
+                if (!sidebar.contains(event.target) && event.target !== menuIcon) {
+                    sidebar.classList.remove("open");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

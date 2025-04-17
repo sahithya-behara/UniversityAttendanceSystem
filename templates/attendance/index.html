@@ -1,116 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - University Attendance Management</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            background-image: url('https://www.datocms-assets.com/40521/1614859483-pillar-page-header-images-1500-1000-1.png?auto=format&dpr=0.23&fit=max&w=1500'); 
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            position: relative;
-        }
-        .navbar {
-            position: absolute;
-            top: 10px;
-            left: 20px;
-        }
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        .dropbtn {
-            font-size: 24px;
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            padding: 10px;
-        }
-        .dropbtn::before {
-            content: '\2630'; /* Unicode for three horizontal lines */
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: white;
-            min-width: 160px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
-            z-index: 1;
-            left: -10px;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .dropdown-content a {
-            color: black;
-            padding: 12px;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown-content a:hover {
-            background-color: #ddd;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-            opacity: 1;
-            visibility: visible;
-        }
-        .container {
-            max-width: 600px;
-            padding: 20px;
-            border-radius: 10px;
-            background: rgba(0, 0, 0, 0.6);
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-        }
-        .login-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 24px;
-            background-color: #007bff;
-            color: white;
-            font-size: 18px;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background 0.3s ease;
-        }
-        .login-link:hover {
-            background-color: #0056b3;
-        }
-        h1, p {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-    </style>
+    <title>University Attendance Management System</title>
+    <link rel="stylesheet" href="{% static 'attendance/css/style.css' %}">
 </head>
 <body>
-    <div class="navbar">
-        <div class="dropdown">
-            <button class="dropbtn"></button>
-            <div class="dropdown-content">
-                <a href="#">Dashboard</a>
-                <a href="#">Attendance</a>
-                <a href="#">Class Management</a>
-            </div>
-        </div>
-    </div>
-    
+    <div class="header">University Attendance Management System</div>
     <div class="container">
-        <h1>Welcome to University Attendance Management</h1>
-        <p>Track student attendance easily with our system.</p>
-        <a href="{% url 'login' %}" class="login-link">Login</a>
+        <h1>Welcome to University Attendance Management System</h1>
+        <p>Efficiently manage and track student attendance with ease. Our system provides accurate record-keeping, real-time monitoring, and detailed reports to enhance academic accountability and streamline administrative processes.</p>
+        <a href="{% url 'login' %}" class="button-link">Login</a>
+        <a href="{% url 'register' %}" class="button-link">Register</a>
     </div>
 </body>
 </html>

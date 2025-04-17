@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - University Attendance Management</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'attendance/css/style.css' %}">
+    <title>Register - University Attendance Management</title>
     <style>
         /* General Styles */
         body {
@@ -27,64 +25,70 @@
             text-align: center;
             padding: 15px;
             width: 100%;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
             position: absolute;
             top: 0;
             left: 0;
         }
 
-        /* Login Container */
-        .login-container {
-            background: rgba(255, 255, 255, 0.1);
+        /* Registration Container */
+        .register-container {
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
             text-align: center;
-            width: 350px;
-            margin-top: 70px;
+            width: 500px;
+            margin-top: 80px;
         }
 
-        .login-container h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
+        .register-container h2 {
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .register-container p {
+            font-size: 16px;
+            margin-bottom: 25px;
         }
 
         /* Form Fields */
-        .login-form input {
+        .register-form input, .register-form select {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
+            padding: 12px;
+            margin: 12px 0;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 18px;
         }
 
-        /* Login Button */
-        .login-form button {
+        /* Register Buttons */
+        .register-buttons button {
             background-color: #D80000;
             color: white;
             border: none;
-            padding: 12px;
+            padding: 14px;
             width: 100%;
-            font-size: 18px;
+            font-size: 20px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 8px;
             transition: 0.3s;
+            margin-bottom: 15px;
         }
 
-        .login-form button:hover {
+        .register-buttons button:hover {
             background-color: #ff4d4d;
         }
 
         /* Back Link */
         .back-link {
             display: block;
-            margin-top: 15px;
+            margin-top: 20px;
             color: white;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 16px;
         }
 
         .back-link:hover {
@@ -94,25 +98,13 @@
 </head>
 <body>
     <div class="header">University Attendance Management System</div>
-    <div class="login-container">
-        <h2>Welcome Back!</h2>
-        <p>Please log in to access the University Attendance System.</p>
-        
-        {% if messages %}
-            <div>
-                {% for message in messages %}
-                    <p style="color: yellow;">{{ message }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-
-        <form class="login-form" method="POST" action="{% url 'login' %}">
-            {% csrf_token %}
-            <input type="email" id="email" name="email" required placeholder="Enter Email">
-            <input type="password" id="password" name="password" required placeholder="Enter Password">
-            <button type="submit">Login</button>
-        </form>
-        
+    <div class="register-container">
+        <h2>Join Our University Attendance System</h2>
+        <p>Effortlessly track attendance and stay updated. Choose your role to register and be part of a seamless management system.</p>
+        <div class="register-buttons">
+            <a href="{% url 'student_register' %}"><button>Register as Student</button></a>
+            <a href="{% url 'faculty_register' %}"><button>Register as Faculty</button></a>
+        </div>
         <a href="{% url 'index' %}" class="back-link">← Back to Home</a>
     </div>
 </body>

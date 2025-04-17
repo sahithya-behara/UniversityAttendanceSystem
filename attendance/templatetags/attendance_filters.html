@@ -1,0 +1,9 @@
+from django import template
+from attendance.models import FacultyAttendance
+
+register = template.Library()
+
+@register.filter
+def attendance_status(attendance_dict, faculty_id):
+    record = attendance_dict.get(faculty_id)
+    return record.status if record else ''

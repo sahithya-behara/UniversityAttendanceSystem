@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance</title>
+    
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #AF3838;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #05033F;
+            padding: 15px 20px;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .menu-icon:hover {
+            color: #ff4d4d;
+        }
+
+        /* Sidebar Menu */
+        #sidebar {
+            position: absolute;
+            left: 0;
+            top: 60px;
+            width: 220px;
+            background: #05033f; /* Updated color */
+            display: none;
+            padding: 15px;
+            transition: 0.3s;
+        }
+
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #sidebar ul li {
+            padding: 12px;
+            border-bottom: 1px solid #fff;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #sidebar ul li:hover {
+            background-color: #D80000;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .search-bar input {
+            width: 70%; /* Increased from 50% to 70% */
+            padding: 12px; /* Slightly increased padding */
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* Options Section */
+        .options {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .options button {
+            background-color: #05033f; /* Updated color */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .options button:hover {
+            background-color: #ff4d4d;
+            transform: scale(1.05);
+        }
+
+        /* Student Attendance Section */
+        .student-attendance {
+            background-color: #05033f; /* Updated color */
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .student-attendance p {
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+
+        /* Attendance Summary */
+        .attendance-summary {
+            background: #05033F; /* Transparent Box */
+            padding: 20px;
+            margin: 20px auto;
+            text-align: left;
+            border-radius: 36px;
+            width: 60%; /* Centering and proper width */
+            backdrop-filter: blur(30px); /* Blur effect for transparency */
+        }
+
+        /* Close Button */
+        .close-btn {
+            display: none;
+            font-size: 20px;
+            cursor: pointer;
+            float: right;
+            color: white;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="menu-icon" onclick="toggleMenu()">☰ MENU</div>
+        <h2>STUDENT ATTENDANCE</h2>
+    </header>
+
+    <!-- Sidebar Menu -->
+    <nav id="sidebar">
+        <div class="close-btn" onclick="toggleMenu()">✖</div>
+        <ul>
+            <li>Dashboard</li>
+            <li>Profile</li>
+            <li>Settings</li>
+            <li>Feedback</li>
+            <li>About App</li>
+        </ul>
+    </nav>
+
+    <!-- Container -->
+    <div class="container">
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" placeholder="Search by roll no or name">
+        </div>
+
+        <!-- Options (Only Faculty Can See These Buttons) -->
+        {% if user.user_type == "faculty" %}
+        <div class="options">
+            <button onclick="location.href='{% url 'add_student' %}'">➕ Add Student</button>
+            <button onclick="location.href='{% url 'mark_attendance' %}'">📅 Mark Attendance</button>
+        </div>
+        {% endif %}
+
+        <!-- Student Attendance Section -->
+        <div class="student-attendance">
+            <h2>Student Attendance</h2>
+            <p>"Attendance is the key to success! Every class you attend brings you one step closer to your dreams. Stay committed, stay present, and make the most of every learning opportunity!"</p>
+        </div>
+
+        <!-- Attendance Summary -->
+        <div class="attendance-summary">
+            <h3>ATTENDANCE SUMMARY OF SEARCHED STUDENT</h3>
+            <p>ROLL NO: <span id="roll"></span></p>
+            <p>NAME: <span id="name"></span></p>
+            <p>BRANCH: <span id="branch"></span></p>
+            <p>YEAR: <span id="year"></span></p>
+            <p>ATTENDANCE: <span id="attendance"></span></p>
+        </div>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("sidebar");
+            const closeBtn = document.querySelector(".close-btn");
+
+            if (menu.style.display === "block") {
+                menu.style.display = "none";
+                closeBtn.style.display = "none";
+            } else {
+                menu.style.display = "block";
+                closeBtn.style.display = "block";
+            }
+        }
+    </script>
+
+</body>
+</html>

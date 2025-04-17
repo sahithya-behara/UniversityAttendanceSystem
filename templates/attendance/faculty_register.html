@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Registration - University Attendance Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://img.freepik.com/free-vector/abstrac-background-gradient-colorful_677411-4208.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .header {
+            background-color: #05033F;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            font-size: 26px;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .register-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 500px;
+            margin-top: 80px;
+        }
+
+        .register-container h2 {
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .register-form input, .register-form select {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+        }
+
+        .register-button {
+            background-color: #D80000;
+            color: white;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .register-button:hover {
+            background-color: #ff4d4d;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Error Message Styling */
+        .error-message {
+            color: #ff4d4d;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .success-message {
+            color: #00ff00;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">University Attendance Management System</div>
+
+    <div class="register-container">
+        <h2>Faculty Registration</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p class="{% if message.tags == 'success' %}success-message{% else %}error-message{% endif %}">
+                    {{ message }}
+                </p>
+            {% endfor %}
+        {% endif %}
+
+        <!-- ✅ Display Form Errors -->
+        {% if form.errors %}
+        <div class="error-message">
+            <ul>
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    
+        <form class="register-form" method="POST" action="{% url 'faculty_register' %}">
+            {% csrf_token %}
+            {{ form.full_name }}
+            {{ form.email }}
+            {{ form.branch }}
+            {{ form.class_teacher_of }}
+            {{ form.designation }}
+            <input type="password" name="password1" placeholder="Password" required>
+            <input type="password" name="password2" placeholder="Confirm Password" required>
+            <button type="submit" class="register-button">Register</button>
+        </form>
+
+        <p>Already registered? <a href="{% url 'login' %}" style="color: white; text-decoration: underline;">Login here</a></p>
+        <a href="{% url 'home' %}" class="back-link">← Back to Home</a>
+    </div>
+</body>
+</html>

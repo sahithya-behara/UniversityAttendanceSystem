@@ -1,16 +1,16 @@
-from pathlib import Path
 import os
+from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-k8a%mlr@n^@3dk!xl+-@$1z1%r25)qs+vl7-ott6da!0y3abk*'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-k8a%mlr@n^@3dk!xl+-@$1z1%r25)qs+vl7-ott6da!0y3abk*')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost 127.0.0.1').split()
 
 # Application definition
 INSTALLED_APPS = [
@@ -39,7 +39,7 @@ ROOT_URLCONF = 'university_attendance.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Ensure it looks for global templates
+        'DIRS': [BASE_DIR / "templates"],  # Ensure templates are correctly configured
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -47,11 +47,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.csrf',
             ],
         },
     },
 ]
-
 
 WSGI_APPLICATION = 'university_attendance.wsgi.application'
 
@@ -77,13 +77,27 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# ✅ Static & Media Files Configuration
 STATIC_URL = '/static/'
-
-# Ensure Django finds static files
-STATICFILES_DIRS = [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
-
+STATICFILES_DIRS = [BASE_DIR / "attendance" / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# ✅ Authentication settings
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/home/'
+LOGOUT_REDIRECT_URL = '/login/'
+
+# ✅ Custom User Model
+AUTH_USER_MODEL = 'attendance.CustomUser'
+
+# ✅ Enable Email Authentication Backend
+AUTHENTICATION_BACKENDS = [
+    'attendance.authentication.EmailAuthBackend',  # ✅ Custom email-based authentication
+    'django.contrib.auth.backends.ModelBackend',  # Default username-based authentication
+]
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
